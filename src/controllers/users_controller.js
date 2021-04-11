@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
-const { User } = require('../models')
+const { User, Profile } = require('../../db/models')
 
 // function to create new token
 const createToken = (payload, expiresIn = null) => {
@@ -18,6 +18,7 @@ const responseBuilder = (user) => {
     email: user.email,
     username: user.username,
     emailVerified: user.emailVerified,
+    role: user.role
   }
   resPayload['access_token'] = createToken(resPayload, { expiresIn: '30day' })
   return resPayload
@@ -36,8 +37,9 @@ const createUser = async (req, res) => {
   try {
 
     const hashedPassword = await bcrypt.hash(password, 10)
-    user = await User.build({ email: email, username: username, password: hashedPassword })
+    user = await User.build({ email: email, username: username, password: hashedPassword, Profile: {} }, { include: Profile })
     user.token = createToken({ uuid: user.uuid, email: user.email });
+    console.log(user)
     user.save()
 
     //creating new token with expiry date
