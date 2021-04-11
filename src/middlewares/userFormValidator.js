@@ -1,26 +1,28 @@
 const { body, validationResult } = require('express-validator');
-
+const { RESERVED_EMAILS,RESERVED_USERNAMES} = require('../constants')
 
 const msgValidationResult = validationResult.withDefaults({
   formatter: error => { return { [error.param]: error.msg } }
 })
 
 const checkCreateForm = [
+
   body('username').isString()
     .withMessage('Username must be characters')
     .notEmpty()
     .withMessage('Username field is required.')
     .isLength({ min: 4, max: 20 })
     .withMessage('Username must be between 4 to 20 characters.')
-    // TODO : complete list of unallowed usernames
-    .isIn({values: ['admin', 'Admin','adminstration','Adminstration']})
+    .custom(value => {
+      return !RESERVED_USERNAMES.includes(value)
+    })
     .withMessage('admin or adminstration is now allowed')
   ,
   body('email').isEmail()
     .withMessage('Invalid email address format')
     .notEmpty()
     .withMessage('Email field is required.')
-    .isIn({values: ['admin@myhost.com', 'adminstration@myhost.com']})
+    .custom(value => !RESERVED_EMAILS.includes(value))
     .withMessage('Email value is not allowed'),
   body('password').notEmpty()
     .withMessage('Password field is required.')

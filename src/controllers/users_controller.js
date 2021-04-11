@@ -62,7 +62,8 @@ const loginUser = async (req, res) => {
   let resPayload = {}
 
   try {
-    const user = await User.findOne({ where: { email: email } })
+    const user = await User.findOne({ where: { email: email },include: Profile })
+    return res.json(user)
     if (user && bcrypt.compare(password, user.password)) {
       //TODO savie in redis database
 

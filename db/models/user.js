@@ -2,6 +2,9 @@
 const {
   Model
 } = require('sequelize');
+
+const {RESERVED_EMAILS,RESERVED_USERNAMES} = require('../../src/constants')
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -27,7 +30,10 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: { msg: "Username Field is required" },
         notEmpty: { msg: "Username Field Can't be blank" },
-        notIn: ['admin', 'administration'],
+        notIn: { 
+          args: RESERVED_USERNAMES,
+          msg: "Username is reserved"
+        },
         len: [4, 20]
       }
     },
@@ -41,8 +47,8 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: { msg: "Invalid Email format" },
         notIn: { 
           // TODO : to change to my host
-          args: ['admin@myhost.com' , 'adminstration@myhost.com'],
-          msg: "Email value is not allowed"
+          args: RESERVED_EMAILS,
+          msg: "Email value is reserved"
         }
       }
     },
