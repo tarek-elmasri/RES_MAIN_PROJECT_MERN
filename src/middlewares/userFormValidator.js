@@ -12,11 +12,16 @@ const checkCreateForm = [
     .withMessage('Username field is required.')
     .isLength({ min: 4, max: 20 })
     .withMessage('Username must be between 4 to 20 characters.')
+    // TODO : complete list of unallowed usernames
+    .isIn({values: ['admin', 'Admin','adminstration','Adminstration']})
+    .withMessage('admin or adminstration is now allowed')
   ,
   body('email').isEmail()
     .withMessage('Invalid email address format')
     .notEmpty()
-    .withMessage('Email field is required.'),
+    .withMessage('Email field is required.')
+    .isIn({values: ['admin@myhost.com', 'adminstration@myhost.com']})
+    .withMessage('Email value is not allowed'),
   body('password').notEmpty()
     .withMessage('Password field is required.')
     .isLength({ min: 5 })

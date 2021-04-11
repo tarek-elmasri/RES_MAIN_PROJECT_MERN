@@ -39,6 +39,11 @@ module.exports = (sequelize, DataTypes) => {
         notNull: { msg: "Email field is required" },
         notEmpty: { msg: "Email field can't be blank" },
         isEmail: { msg: "Invalid Email format" },
+        notIn: { 
+          // TODO : to change to my host
+          args: ['admin@myhost.com' , 'adminstration@myhost.com'],
+          msg: "Email value is not allowed"
+        }
       }
     },
     password: {

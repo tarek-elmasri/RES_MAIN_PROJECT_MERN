@@ -40,7 +40,7 @@ const createUser = async (req, res) => {
     user = await User.build({ email: email, username: username, password: hashedPassword, Profile: {} }, { include: Profile })
     user.token = createToken({ uuid: user.uuid, email: user.email });
     console.log(user)
-    user.save()
+    await user.save()
 
     //creating new token with expiry date
     // TODO ## saving this token in redis database
@@ -50,7 +50,7 @@ const createUser = async (req, res) => {
   } catch (error) {
 
     console.log(error)
-    return res.status(500).json({ error: "Somethingwent wrong" })
+    return res.status(500).json({ error })
   }
 
 }
