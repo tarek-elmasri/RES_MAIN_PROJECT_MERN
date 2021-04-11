@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+
+const { RESERVED_EMAILS, RESERVRED_USERNAMES } = require('../../src/constants')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -12,6 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ Profile }) {
       // define association here
       User.hasOne(Profile, { foreignKey: "userId" })
+    }
+
+    toJSON() {
+      return {
+        ...this.get(),
+        password: undefined,
+        id: undefined
+      }
     }
   };
   User.init({
@@ -27,7 +37,10 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: { msg: "Username Field is required" },
         notEmpty: { msg: "Username Field Can't be blank" },
-        notIn: ['admin', 'administration'],
+        notIn: {
+          args: RESERVRED_USERNAMES,
+          msg: "Username is reserved"
+        },
         len: [4, 20]
       }
     },
@@ -39,6 +52,10 @@ module.exports = (sequelize, DataTypes) => {
         notNull: { msg: "Email field is required" },
         notEmpty: { msg: "Email field can't be blank" },
         isEmail: { msg: "Invalid Email format" },
+        notIn: {
+          args: RESERVED_EMAILS,
+          msg: "Email is reserved"
+        }
       }
     },
     password: {
