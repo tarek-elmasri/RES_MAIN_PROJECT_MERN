@@ -13,9 +13,23 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Profile.belongsTo(User, { foreignKey: "userId" })
     }
+
+    toJSON() {
+      return {
+        ...this.get(),
+        userId: undefined,
+        id: undefined
+      }
+    }
   };
   Profile.init({
     // TODO : validations
+    uuid: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      unique: true
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -23,8 +37,6 @@ module.exports = (sequelize, DataTypes) => {
     image: {
       type: DataTypes.STRING,
       allowNull: true,
-      //to set into standard_user_avatar
-      defaultValue: ""
     },
     firstName: {
       type: DataTypes.STRING,
