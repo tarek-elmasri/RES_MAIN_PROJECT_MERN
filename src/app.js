@@ -6,12 +6,15 @@ const routers = require('./routes')
 const { sequelize } = require('../db/models');
 
 const app = express()
+
+// server middlewares
 app.use(express.json())
 app.use(morgan('dev'))
 
+//Routers
 app.use('/auth', routers.authRoutes)
 app.use('/profile', routers.profileRoutes)
-
+app.use('/adminPanel', routers.staffRoutes)
 
 
 
