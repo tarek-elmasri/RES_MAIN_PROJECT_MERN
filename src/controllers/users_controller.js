@@ -68,7 +68,7 @@ const loginUser = async (req, res) => {
       return res.json(responseBuilder(user))
 
     } else {
-      return res.status(401).json({error: "Invalid Email or Pasword."})
+      return res.status(401).json({ error: "Invalid Username or Password." })
     }
   } catch (error) {
     console.log(error)

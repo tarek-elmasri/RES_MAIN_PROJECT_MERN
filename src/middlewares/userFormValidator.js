@@ -30,6 +30,7 @@ const checkCreateForm = [
     .withMessage('Password must be of characters')
 ]
 
+
 const validateForm = (req, res, next) => {
 
   const errors = msgValidationResult(req).array()
@@ -40,6 +41,7 @@ const validateForm = (req, res, next) => {
 
   next()
 }
+
 
 const checkLoginForm = [
   body('email').isEmail()
