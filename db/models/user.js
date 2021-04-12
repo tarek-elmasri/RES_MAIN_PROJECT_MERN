@@ -11,9 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ Profile }) {
+    static associate({ Profile, Permission }) {
       // define association here
       User.hasOne(Profile, { foreignKey: "userId" })
+      User.hasMany(Permission, { foreignKey: "userId" })
     }
 
     toJSON() {

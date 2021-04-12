@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
-const { User, Profile } = require('../../db/models')
+const { User, Profile, Permission } = require('../../db/models')
+const { PERMISSION_TYPES } = require('../constants')
 
 // function to create new token
 const createToken = (payload, expiresIn = null) => {
@@ -41,7 +42,7 @@ const createUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10)
     user = await User.build({ email: email, username: username, password: hashedPassword, Profile: {} }, { include: Profile })
     user.token = createToken({ uuid: user.uuid, email: user.email });
-    user.save()
+    await user.save()
 
     //creating new token with expiry date
     // TODO ## saving this token in redis database
