@@ -46,7 +46,6 @@ const createUser = async (req, res) => {
 
     //creating new token with expiry date
     // TODO ## saving this token in redis database
-
     return res.json(responseBuilder(user))
 
   } catch (error) {

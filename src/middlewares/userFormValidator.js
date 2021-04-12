@@ -34,9 +34,9 @@ const validateForm = (req, res, next) => {
 
   const errors = msgValidationResult(req).array()
 
-  if (errors.length > 0) {
+  if (errors.length > 0)
     return res.status(400).json({ errors })
-  }
+
 
   next()
 }

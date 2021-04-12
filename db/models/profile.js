@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { PAYMENT_OPTIONS } = require('../../src/constants');
 module.exports = (sequelize, DataTypes) => {
   class Profile extends Model {
     /**
@@ -41,17 +42,20 @@ module.exports = (sequelize, DataTypes) => {
     firstName: {
       type: DataTypes.STRING,
       allowNull: true,
-      validate: {
-
-      }
     },
     lastName: {
       type: DataTypes.STRING,
       allowNull: true
     },
     paymentOption: {
-      type: DataTypes.ENUM(['Cash', 'Credit Card', 'Mada']),
+      type: DataTypes.ENUM(PAYMENT_OPTIONS),
       defaultValue: "Cash",
+      validate: {
+        isIn: {
+          args: PAYMENT_OPTIONS,
+          msg: "Invalid Payment Option"
+        }
+      }
     },
     phoneNo: {
       type: DataTypes.INTEGER,
