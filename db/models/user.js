@@ -3,8 +3,7 @@ const {
   Model
 } = require('sequelize');
 
-const {RESERVED_EMAILS,RESERVED_USERNAMES} = require('../../src/constants')
-
+const { RESERVED_EMAILS, RESERVRED_USERNAMES } = require('../../src/constants')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -15,6 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ Profile }) {
       // define association here
       User.hasOne(Profile, { foreignKey: "userId" })
+    }
+
+    toJSON() {
+      return {
+        ...this.get(),
+        password: undefined,
+        id: undefined
+      }
     }
   };
   User.init({
@@ -30,8 +37,8 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: { msg: "Username Field is required" },
         notEmpty: { msg: "Username Field Can't be blank" },
-        notIn: { 
-          args: RESERVED_USERNAMES,
+        notIn: {
+          args: RESERVRED_USERNAMES,
           msg: "Username is reserved"
         },
         len: [4, 20]
@@ -45,10 +52,9 @@ module.exports = (sequelize, DataTypes) => {
         notNull: { msg: "Email field is required" },
         notEmpty: { msg: "Email field can't be blank" },
         isEmail: { msg: "Invalid Email format" },
-        notIn: { 
-          // TODO : to change to my host
+        notIn: {
           args: RESERVED_EMAILS,
-          msg: "Email value is reserved"
+          msg: "Email is reserved"
         }
       }
     },

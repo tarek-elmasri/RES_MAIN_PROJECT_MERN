@@ -1,9 +1,7 @@
+const RESERVED_EMAILS = ['admin@myhost.com', 'adminstration@myhost.com', 'no-reply@myhost.com']
+const RESERVRED_USERNAMES = ['admin', 'adminstration', 'hr', 'no-reply']
 
-const RESERVED_EMAILS = ['admin@myhost.com' , 'adminstration@myhost.com']
-const RESERVED_USERNAMES = ['admin' , 'Admin' , 'adminstration','Adminstartion']
-
-
-module.exports={
-    RESERVED_EMAILS,
-    RESERVED_USERNAMES
+module.exports = {
+  RESERVED_EMAILS,
+  RESERVRED_USERNAMES
 }
