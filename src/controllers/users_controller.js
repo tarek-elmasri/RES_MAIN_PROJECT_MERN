@@ -32,7 +32,7 @@ const createUser = async (req, res) => {
   const { email, password, username } = req.body
 
   //checking if email already exists
-  let user = await User.findOne({ where: { email: email } })
+  let user = await User.findOne({ where: { email: email.toLowerCase() } })
   if (user) {
     return res.status(401).json({ errors: [{ email: "Email already exists" }] })
   }
@@ -40,7 +40,7 @@ const createUser = async (req, res) => {
   try {
 
     const hashedPassword = await bcrypt.hash(password, 10)
-    user = await User.build({ email: email, username: username, password: hashedPassword, Profile: {} }, { include: Profile })
+    user = await User.build({ email: email.toLowerCase(), username: username, password: hashedPassword, Profile: {} }, { include: Profile })
     user.token = createToken({ uuid: user.uuid, email: user.email });
     await user.save()
 
@@ -62,7 +62,7 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body
 
   try {
-    const user = await User.findOne({ where: { email: email }, include: Profile })
+    const user = await User.findOne({ where: { email: email.toLowerCase() }, include: Profile })
     if (user && bcrypt.compare(password, user.password)) {
       //TODO savie in redis database)
       return res.json(responseBuilder(user))

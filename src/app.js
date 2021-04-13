@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 3000
 app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`)
   try {
-    await sequelize.sync({ force: true })
+    await sequelize.sync()
     console.log('Database Sync done successfully')
 
   } catch (error) {
