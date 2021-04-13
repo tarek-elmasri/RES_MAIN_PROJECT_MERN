@@ -1,13 +1,14 @@
 require('dotenv').config()
 const express = require('express');
 const morgan = require('morgan');
-
+const cors = require('cors')
 const routers = require('./routes')
 const { sequelize } = require('../db/models');
 
 const app = express()
 
 // server middlewares
+app.use(cors())
 app.use(express.json())
 app.use(morgan('dev'))
 

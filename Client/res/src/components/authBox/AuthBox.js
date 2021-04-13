@@ -2,6 +2,8 @@ import React from 'react'
 import useForm from '../forms'
 import './AuthBox.css'
 
+import axios from '../../api/Axios'
+
 const initialValues = {
   username: "",
   email: "",
@@ -12,16 +14,20 @@ function AuthBox() {
 
   const { Form, formValues, setFormValues, onChange } = useForm(initialValues)
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault()
 
+    axios.post('/auth/login', formValues)
+      .then(res => console.log(res))
+      .catch(err => console.log(err.response.data))
   }
 
   return (
     <div className='authBox'>
-      <Form>
-        <input className='authBox__input' name='username'
+      <form>
+        <input className='authBox__input' name='email'
           placeholder='Username' onChange={onChange}
-          value={formValues.username}
+          value={formValues.email}
         />
 
         <input className='authBox__input' name='password'
@@ -33,7 +39,7 @@ function AuthBox() {
           Login
         </button>
 
-      </Form>
+      </form>
     </div>
   )
 }
