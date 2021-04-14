@@ -11,7 +11,7 @@ const getPermissions = (req, res) => {
 const getUsers = async (req, res) => {
   try {
 
-    const users = await User.findMany()
+    const users = await User.findAll()
     return res.json(users)
 
   } catch (error) {
@@ -22,7 +22,7 @@ const getUsers = async (req, res) => {
 
 const getUsersWithProfiles = async (req, res) => {
   try {
-    const users = await User.findMany({ include: Profile })
+    const users = await User.findAll({ include: Profile })
 
     return res.json(users)
   } catch (error) {

@@ -14,7 +14,6 @@ const useForm = (values = initialValue) => {
   const [formValues, setFormValues] = useState(values)
 
   const onChange = (e) => {
-    console.log(formValues)
     const { name, value } = e.target
     setFormValues({
       ...formValues,
