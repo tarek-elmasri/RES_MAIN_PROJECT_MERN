@@ -29,8 +29,10 @@ function Login() {
 
 
   return (
-    <div className='Login'>
-      <AuthBox submitFunc={onSubmit} errors={resErrors} />
+    <div style={{ height: '100vh', background: "#F2F2F2" }}>
+      <div className='Login' >
+        <AuthBox submitFunc={onSubmit} errors={resErrors} />
+      </div>
     </div>
   )
 }

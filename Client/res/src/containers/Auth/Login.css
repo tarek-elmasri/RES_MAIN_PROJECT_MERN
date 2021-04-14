@@ -1,4 +1,5 @@
 .Login {
+  min-width: 400px;
   position: absolute;
   top: 50%;
   left: 50%;

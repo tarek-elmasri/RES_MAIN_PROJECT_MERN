@@ -18,14 +18,25 @@ const useStyles = makeStyles(theme => ({
   },
   input: {
     width: '90%',
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'green',
+      },
+      '&:hover fieldset': {
+        borderColor: 'red'
+      }
+    },
+  },
+  inputBorder: {
+    borderColor: "orange"
   },
   submit: {
     width: '90%',
     margin: theme.spacing(1)
   },
   form: {
-    backgroundColor: '#F2F2F2',
+    backgroundColor: 'white',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -45,7 +56,7 @@ function AuthBox({ submitFunc, errors }) {
     <div className={styles.root}>
       <form className={styles.form}>
         <Typography variant='h5' gutterBottom>
-          Welcome
+          Sign In
         </Typography>
         <TextField variant='outlined'
           className={styles.input}

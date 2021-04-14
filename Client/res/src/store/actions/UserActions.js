@@ -1,9 +1,9 @@
 import * as api from '../../api'
 import { AUTH_USER } from '../constants'
 
-export const login = (form) => (dispatch) => {
+export const login = (form, service = api.Login) => (dispatch) => {
 
-  return api.Login(form)
+  return service(form)
     .then(res => {
       dispatch({
         type: AUTH_USER,
@@ -14,9 +14,9 @@ export const login = (form) => (dispatch) => {
     .catch(err => { return Promise.reject(err.response) })
 }
 
-export const getPermissions = (access_token) => dispatch => {
+export const getPermissions = (access_token, service = api.GetPermissions) => dispatch => {
 
-  return api.GetPermissions(access_token)
+  return service(access_token)
     .then(res => {
       console.log(res.data)
     })
@@ -26,8 +26,8 @@ export const getPermissions = (access_token) => dispatch => {
 
 }
 
-export const getUsers = (access_token) => dispatch => {
-  return api.GetUsers(access_token)
+export const getUsers = (access_token, service = api.GetUsers) => dispatch => {
+  return service(access_token)
     .then(res => {
       console.log(res.data)
     })
